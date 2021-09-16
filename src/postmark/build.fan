@@ -18,7 +18,7 @@ class Build : build::BuildPod
     ]
     depends = ["sys 1.0", "util 1.0", "web 1.0"]
     srcDirs = [`fan/`]
-    docApi   = true
-    docSrc   = true
+    docApi  = true
+    docSrc  = true
   }
 }

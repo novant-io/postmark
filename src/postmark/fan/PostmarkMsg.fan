@@ -23,8 +23,14 @@ const class PostmarkMsg
   ** From email address for message.
   const Str from
 
-  ** To email address for message.
+  ** To email address(es) for message.
   const Str to
+
+  ** CC email address(es) for message.
+  const Str? cc
+
+  ** BCC email address(es) for message.
+  const Str? bcc
 
   ** Subject for message.
   const Str subject
@@ -45,6 +51,8 @@ const class PostmarkMsg
     json.add("{")
     json.add("\"From\": ${from.toCode},")
     json.add("\"To\": ${to.toCode},")
+    if (cc  != null) json.add("\"Cc\": ${cc.toCode},")
+    if (bcc != null) json.add("\"Bcc\": ${bcc.toCode},")
     json.add("\"Subject\": ${subject.toCode},")
     if (bodyText != null) json.add("\"TextBody\": ${bodyText.toCode},")
     if (bodyHtml != null) json.add("\"HtmlBody\": ${bodyHtml.toCode},")
