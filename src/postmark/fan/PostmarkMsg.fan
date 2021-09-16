@@ -54,8 +54,8 @@ const class PostmarkMsg
     if (cc  != null) json.add("\"Cc\": ${cc.toCode},")
     if (bcc != null) json.add("\"Bcc\": ${bcc.toCode},")
     json.add("\"Subject\": ${subject.toCode},")
-    if (bodyText != null) json.add("\"TextBody\": ${bodyText.toCode},")
-    if (bodyHtml != null) json.add("\"HtmlBody\": ${bodyHtml.toCode},")
+    if (bodyText != null) json.add("\"TextBody\": ${PostmarkUtil.escapeStr(bodyText)},")
+    if (bodyHtml != null) json.add("\"HtmlBody\": ${PostmarkUtil.escapeStr(bodyHtml)},")
     json.add("\"MessageStream\": ${msgStream.toCode}")
     json.add("}")
     return json.toStr
