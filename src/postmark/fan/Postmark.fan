@@ -26,7 +26,12 @@ const class Postmark
     WebClient? c
     try
     {
-      c = WebClient(`https://api.postmarkapp.com/email`)
+      // check for plain email or template
+      op := "email"
+      if (msg.templateAlias != null) op = "email/withTemplate"
+
+      // setup req
+      c = WebClient(`https://api.postmarkapp.com/${op}`)
       c.reqHeaders["Accept"]       = "application/json"
       c.reqHeaders["Content-Type"] = "application/json"
       c.reqHeaders["X-Postmark-Server-Token"] = token

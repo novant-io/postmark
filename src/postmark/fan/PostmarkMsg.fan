@@ -33,7 +33,7 @@ const class PostmarkMsg
   const Str? bcc
 
   ** Subject for message.
-  const Str subject
+  const Str? subject
 
   ** Text content for message body.
   const Str? bodyText
@@ -41,23 +41,34 @@ const class PostmarkMsg
   ** HTML content for message body.
   const Str? bodyHtml
 
+  ** Template alias name if using a template.
+  const Str? templateAlias
+
+  ** Template model name if using a template.
+  const [Str:Obj?]? templateModel
+
   ** MessageStream value for message.
   const Str msgStream := "outbound"
 
   ** Convert message to JSON string.
   Str toJson()
   {
-    json := StrBuf()
-    json.add("{")
-    json.add("\"From\": ${from.toCode},")
-    json.add("\"To\": ${to.toCode},")
-    if (cc  != null) json.add("\"Cc\": ${cc.toCode},")
-    if (bcc != null) json.add("\"Bcc\": ${bcc.toCode},")
-    json.add("\"Subject\": ${subject.toCode},")
-    if (bodyText != null) json.add("\"TextBody\": ${PostmarkUtil.escapeStr(bodyText)},")
-    if (bodyHtml != null) json.add("\"HtmlBody\": ${PostmarkUtil.escapeStr(bodyHtml)},")
-    json.add("\"MessageStream\": ${msgStream.toCode}")
-    json.add("}")
-    return json.toStr
+    map := Str:Obj?[:]
+
+    map["MessageStream"] = msgStream
+    map["From"] = from
+    map["To"]   = to
+
+    if (cc   != null) map["Cc"]  = cc
+    if (bcc  != null) map["Bcc"] = bcc
+
+    if (subject  != null) map["Subject"]  = subject
+    if (bodyText != null) map["TextBody"] = bodyText
+    if (bodyHtml != null) map["HtmlBody"] = bodyHtml
+
+    if (templateAlias != null) map["TemplateAlias"] = templateAlias
+    if (templateModel != null) map["TemplateModel"] = templateModel
+
+    return JsonOutStream.writeJsonToStr(map)
   }
 }
