@@ -41,6 +41,9 @@ const class PostmarkMsg
   ** HTML content for message body.
   const Str? bodyHtml
 
+  ** List of file attachments.
+  const PostmarkFile[] attachments := [,]
+
   ** Template alias name if using a template.
   const Str? templateAlias
 
@@ -65,6 +68,9 @@ const class PostmarkMsg
     if (subject  != null) map["Subject"]  = subject
     if (bodyText != null) map["TextBody"] = bodyText
     if (bodyHtml != null) map["HtmlBody"] = bodyHtml
+
+    if (attachments.size > 0)
+      map["Attachments"] = attachments.map |a| { a.toJson }
 
     if (templateAlias != null) map["TemplateAlias"] = templateAlias
     if (templateModel != null) map["TemplateModel"] = templateModel
